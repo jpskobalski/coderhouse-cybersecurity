@@ -1,0 +1,170 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.3cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\definecolor{linea}{HTML}{CFDCE1}
+\hypersetup{colorlinks=true,linkcolor=turquesa,urlcolor=turquesa,pdftitle={Reporte de riesgos domésticos (CIA)},pdfauthor={Juan Skobalski}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gris} Ciberseguridad | Trabajo práctico 1}
+\fancyhead[R]{\small\color{gris} Juan Skobalski}
+\fancyfoot[C]{\small\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linea}\leaders\hrule height \headrulewidth\hfill}}
+\titleformat{\section}{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}{\large\bfseries\color{turquesa}}{}{0pt}{}
+\setlist[itemize]{leftmargin=1.35em,itemsep=4pt,topsep=4pt}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.3}
+
+\newcommand{\field}[2]{\textbf{#1} & #2\\}
+\newcommand{\riskfield}[2]{\textcolor{azul}{\textbf{#1}} & #2\\[2pt]}
+
+\begin{document}
+
+% Carátula
+\thispagestyle{empty}
+\vspace*{1.0cm}
+{\color{turquesa}\large C O D E R H O U S E}\par
+\vspace{0.4cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{2.4cm}
+{\color{gris}\Large CIBERSEGURIDAD}\par
+\vspace{0.45cm}
+{\color{azul}\Huge\bfseries Reporte de riesgos\\[5pt] domésticos}\par
+\vspace{0.45cm}
+{\color{turquesa}\LARGE Análisis de la tríada CIA}\par
+\vspace{1.0cm}
+{\color{gris}\large Trabajo práctico 1 | Checkpoint}\par
+\vfill
+\noindent\colorbox{fondo}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+    \vspace{0.28cm}
+    \noindent\makebox[3.1cm][l]{\textcolor{azul}{\textbf{Estudiante}}}Juan Skobalski\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.1cm][l]{\textcolor{azul}{\textbf{Curso}}}Ciberseguridad\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.1cm][l]{\textcolor{azul}{\textbf{Entrega}}}14 de octubre de 2026\par
+    \vspace{0.28cm}
+  \end{minipage}}
+\vspace{0.75cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{0.25cm}
+{\small\color{gris} Inventario, análisis CIA y evaluación cualitativa de riesgos en el entorno digital doméstico.}
+\newpage
+
+% Introducción
+\section*{Introducción}
+\textbf{Objetivo.} Identificar riesgos concretos del entorno digital cotidiano y relacionar cada activo con una vulnerabilidad, una amenaza externa, su posible impacto y una medida de mitigación.
+
+\subsection*{Alcance}
+El análisis comprende tres activos utilizados en la vida diaria:
+\begin{itemize}
+  \item \textbf{Servidor de casa:} equipo, archivos, copias de seguridad y servicios alojados en la red doméstica.
+  \item \textbf{Computadora laboral en el cowork:} dispositivo, sesiones abiertas, archivos y comunicaciones de trabajo.
+  \item \textbf{iPhone y conexiones inalámbricas:} teléfono, datos personales, aplicaciones, sesiones, AirDrop, Bluetooth y acceso a redes Wi-Fi públicas.
+\end{itemize}
+Se consideran riesgos de acceso lógico y físico vinculados con el uso habitual. No se realiza una auditoría técnica ni se evalúan activos de terceros.
+
+\subsection*{Metodología}
+Primero se determina el valor de cada activo mediante la tríada \textbf{CIA}: Confidencialidad, Integridad y Disponibilidad. Luego se formula un escenario de riesgo siguiendo esta secuencia:
+
+\begin{center}
+\colorbox{fondo}{\parbox{0.91\textwidth}{\centering
+\textcolor{azul}{\textbf{Activo}} $\rightarrow$
+\textcolor{azul}{\textbf{Vulnerabilidad}} $\rightarrow$
+\textcolor{azul}{\textbf{Amenaza}} $\rightarrow$
+\textcolor{azul}{\textbf{Impacto}} $\rightarrow$
+\textcolor{azul}{\textbf{Mitigación}}}}
+\end{center}
+
+\subsection*{Criterios utilizados}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azul}}p{3.2cm} X}
+  Vulnerabilidad & Debilidad propia de la configuración o del comportamiento que permite o facilita el daño.\\
+  Amenaza & Actor o evento externo con capacidad de aprovechar la vulnerabilidad.\\
+  Impacto & Consecuencia sobre la información, el servicio o la actividad personal o laboral.\\
+  Riesgo inicial & Valoración cualitativa que combina la posibilidad de ocurrencia y la gravedad del impacto. Se expresa como Bajo, Medio o Alto.\\
+\end{tabularx}
+
+\vfill
+\noindent\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{\textcolor{azul}{\textbf{Nota de alcance:}} las vulnerabilidades surgen del borrador inicial y deben verificarse en los dispositivos antes de entregar. Si una condición no existe, corresponde reemplazarla por una debilidad observada realmente.}}
+
+\newpage
+\section*{Análisis de los activos mediante la tríada CIA}
+La tabla explica qué se busca proteger en cada dimensión. Una misma situación puede afectar más de un componente de la tríada.
+
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{2.7cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+  \textbf{Activo} & \textcolor{azul}{\textbf{Confidencialidad}} & \textcolor{azul}{\textbf{Integridad}} & \textcolor{azul}{\textbf{Disponibilidad}}\\[4pt]
+  Servidor de casa & Sus archivos, copias de seguridad y datos de otros dispositivos no deben quedar al alcance de terceros. & Los archivos y configuraciones deben mantenerse completos y sin cambios no autorizados. & Los servicios y datos alojados deben estar accesibles cuando se los necesita.\\[7pt]
+  \hline
+  Computadora laboral & Las sesiones y la pantalla pueden contener información de la empresa, colegas o clientes. & Los archivos y mensajes deben conservar su contenido y autoría legítimos. & El equipo y las cuentas deben permitir continuar las tareas y comunicaciones de trabajo.\\[7pt]
+  \hline
+  iPhone & Mensajes, contactos, fotografías, notificaciones y credenciales contienen información privada. & Los datos, ajustes y comunicaciones deben permanecer sin alteraciones no autorizadas. & El teléfono y sus conexiones permiten comunicarse, autenticarse y acceder a servicios cotidianos.\\[4pt]
+\end{tabularx}
+\normalsize
+
+\subsection*{Lectura del análisis}
+En el servidor, un acceso remoto indebido podría comprometer las tres dimensiones simultáneamente. En la computadora laboral, el principal riesgo parte del acceso físico a una sesión abierta. En el iPhone, el análisis se concentra en las conexiones inalámbricas utilizadas fuera del hogar.
+
+\subsection*{Conexiones inalámbricas evaluadas}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azul}}p{2.4cm} X}
+  AirDrop & Recepción de archivos y solicitudes desde dispositivos Apple cercanos.\\
+  Bluetooth & Vinculación con auriculares, vehículos y otros accesorios próximos.\\
+  Wi-Fi público & Conexión a redes compartidas de cafeterías, aeropuertos, coworks u otros espacios públicos.\\
+\end{tabularx}
+
+Tener estas funciones activadas no constituye automáticamente una vulnerabilidad. El riesgo aparece cuando se usan configuraciones permisivas, se aceptan solicitudes desconocidas o se confía en una red sin comprobar su identidad.
+
+\subsection*{Prioridades generales}
+\begin{enumerate}
+  \item Reducir la superficie expuesta del servidor y reservar la administración remota para conexiones protegidas.
+  \item Bloquear la computadora cada vez que queda sin supervisión.
+  \item Aplicar configuraciones restrictivas a AirDrop, Bluetooth y Wi-Fi cuando se utilizan fuera del hogar.
+\end{enumerate}
+
+\newpage
+\section*{Matriz de riesgo inicial}
+\small
+\subsection*{01. Servidor de casa \hfill \textcolor{turquesa}{Riesgo: Alto}}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}X}
+  \riskfield{Vulnerabilidad}{Administración remota accesible desde Internet sin una restricción suficiente de origen o acceso. Debe verificarse en el router y el servidor.}
+  \riskfield{Amenaza}{Atacante remoto que explora direcciones y puertos públicos e intenta ingresar mediante el servicio expuesto.}
+  \riskfield{Impacto}{Lectura o extracción de datos, alteración o borrado de archivos, interrupción de servicios o uso del equipo para actividades maliciosas.}
+  \riskfield{Mitigación}{Cerrar reenvíos de puertos innecesarios; impedir la administración directa desde Internet; acceder mediante VPN; usar MFA cuando esté disponible; actualizar el sistema y limitar las cuentas administradoras.}
+\end{tabularx}
+
+\subsection*{02. Computadora laboral en el cowork \hfill \textcolor{turquesa}{Riesgo: Alto}}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}X}
+  \riskfield{Vulnerabilidad}{Dejar la computadora desbloqueada y sin supervisión al alejarse del puesto.}
+  \riskfield{Amenaza}{Persona no autorizada presente en el cowork que aprovecha una sesión abierta para observar, copiar o modificar información.}
+  \riskfield{Impacto}{Exposición de datos laborales, envío de mensajes en nombre del usuario, alteración de archivos e interrupción del trabajo durante la recuperación.}
+  \riskfield{Mitigación}{Bloquear la pantalla al alejarse; activar el bloqueo automático tras un período corto; cerrar sesiones sensibles y seguir las políticas de la organización.}
+\end{tabularx}
+
+\subsection*{03. iPhone y conexiones inalámbricas \hfill \textcolor{turquesa}{Riesgo: Medio}}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}X}
+  \riskfield{Vulnerabilidad}{AirDrop configurado en \textit{Todos}; aceptación de enlaces Bluetooth desconocidos o permanencia de vínculos innecesarios; conexión automática a redes Wi-Fi abiertas, alertas de certificado ignoradas o ingreso de datos en sitios sin HTTPS.}
+  \riskfield{Amenaza}{Una persona cercana envía contenido engañoso por AirDrop, intenta asociar un dispositivo por Bluetooth o crea una red Wi-Fi falsa para mostrar un portal fraudulento u observar tráfico no cifrado.}
+  \riskfield{Impacto}{Exposición de datos o credenciales, recepción de contenido no deseado, acceso a sitios falsos, alteración de comunicaciones o uso indebido de cuentas vinculadas al teléfono.}
+  \riskfield{Mitigación}{Restringir AirDrop a contactos conocidos; rechazar enlaces Bluetooth inesperados y eliminar accesorios olvidados; verificar el nombre de la red Wi-Fi, desactivar la conexión automática, respetar las alertas y usar datos móviles o una VPN confiable para operaciones sensibles. Mantener iOS actualizado.}
+\end{tabularx}
+\normalsize
+
+\end{document}
