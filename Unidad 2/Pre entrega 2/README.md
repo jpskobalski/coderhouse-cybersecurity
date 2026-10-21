@@ -29,7 +29,7 @@ Las instrucciones completas para preparar cada pantalla están en [`capturas/REA
 
 ## Estado del documento
 
-Mientras falte una captura, la carátula mostrará **BORRADOR - EVIDENCIAS PENDIENTES** y el lugar correspondiente aparecerá como un recuadro. Cuando existan las cinco imágenes, cambiará automáticamente a **REPORTE CON EVIDENCIAS COMPLETAS**.
+Las cinco evidencias se encuentran incorporadas. Si se elimina alguna captura, el lugar correspondiente aparecerá como un recuadro de evidencia pendiente dentro del documento.
 
 ## Salida
 

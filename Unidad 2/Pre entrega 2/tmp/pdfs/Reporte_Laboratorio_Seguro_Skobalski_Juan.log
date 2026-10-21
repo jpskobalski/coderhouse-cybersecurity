@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.23)  21 OCT 2026 09:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.23)  21 OCT 2026 09:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -583,46 +583,46 @@ torio_Seguro_Skobalski_Juan.out)
 \openout3 = `Reporte_Laboratorio_Seguro_Skobalski_Juan.out'.
 
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-03.
+13.
 
 (C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.
 fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-03.
+13.
 
 (C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.
 fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-103.
+113.
 
 (C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy
 .fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-103.
+113.
 
 (C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex
 .fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 103.
+(Font)              <10.95> on input line 113.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 103.
+(Font)              <8> on input line 113.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 103.
+(Font)              <6> on input line 113.
  [1
 
 {C:/Users/JuanPabloSkobalski/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{
 C:/Users/JuanPabloSkobalski/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm
 -ec.enc}]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-56.
+49.
 
 (C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.
 fd
@@ -633,17 +633,17 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
  [2]
-Underfull \hbox (badness 10000) in paragraph at lines 166--167
+Underfull \hbox (badness 10000) in paragraph at lines 159--160
 
  []
 
 <capturas/01-red-nat.png, id=23, 1144.87724pt x 684.75826pt>
 File: capturas/01-red-nat.png Graphic file (type png)
 <use capturas/01-red-nat.png>
-Package pdftex.def Info: capturas/01-red-nat.png  used on input line 168.
+Package pdftex.def Info: capturas/01-red-nat.png  used on input line 161.
 (pdftex.def)             Requested size: 445.99373pt x 266.75163pt.
 [3 <./capturas/01-red-nat.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 180--181
+Underfull \hbox (badness 10000) in paragraph at lines 173--174
 
  []
 
@@ -651,32 +651,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 180--181
 File: capturas/02-usuario-sin-privilegios.png Graphic file (type png)
 <use capturas/02-usuario-sin-privilegios.png>
 Package pdftex.def Info: capturas/02-usuario-sin-privilegios.png  used on input
- line 182.
+ line 175.
 (pdftex.def)             Requested size: 445.99118pt x 252.52774pt.
 [4 <./capturas/02-usuario-sin-privilegios.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 194--195
+Underfull \hbox (badness 10000) in paragraph at lines 187--188
 
  []
 
 <capturas/03-permisos-ls-l.png, id=37, 1205.10225pt x 682.34924pt>
 File: capturas/03-permisos-ls-l.png Graphic file (type png)
 <use capturas/03-permisos-ls-l.png>
-Package pdftex.def Info: capturas/03-permisos-ls-l.png  used on input line 196.
+Package pdftex.def Info: capturas/03-permisos-ls-l.png  used on input line 189.
 
 (pdftex.def)             Requested size: 445.99118pt x 252.52774pt.
 [5 <./capturas/03-permisos-ls-l.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 208--209
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
 
  []
 
 <capturas/04-apt-actualizado.png, id=43, 880.4895pt x 619.113pt>
 File: capturas/04-apt-actualizado.png Graphic file (type png)
 <use capturas/04-apt-actualizado.png>
-Package pdftex.def Info: capturas/04-apt-actualizado.png  used on input line 21
-0.
+Package pdftex.def Info: capturas/04-apt-actualizado.png  used on input line 20
+3.
 (pdftex.def)             Requested size: 437.03267pt x 307.29793pt.
 [6 <./capturas/04-apt-actualizado.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 222--223
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 
  []
 
@@ -684,7 +684,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 222--223
 File: capturas/05-snapshot-hardening.png Graphic file (type png)
 <use capturas/05-snapshot-hardening.png>
 Package pdftex.def Info: capturas/05-snapshot-hardening.png  used on input line
- 224.
+ 217.
 (pdftex.def)             Requested size: 445.98363pt x 57.15483pt.
 [7 <./capturas/05-snapshot-hardening.png>] [8]
 (C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\tmp\pdfs\Reporte_Labora
@@ -718,7 +718,7 @@ abloSkobalski/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C
 :/Users/JuanPabloSkobalski/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
 lmtt10.pfb>
 Output written on "C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\tmp\p
-dfs\Reporte_Laboratorio_Seguro_Skobalski_Juan.pdf" (8 pages, 1306854 bytes).
+dfs\Reporte_Laboratorio_Seguro_Skobalski_Juan.pdf" (8 pages, 1306639 bytes).
 PDF statistics:
  96 PDF objects out of 1000 (max. 8388607)
  14 named destinations out of 1000 (max. 500000)
