@@ -1,0 +1,250 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.25cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\definecolor{linea}{HTML}{CFDCE1}
+\definecolor{pendiente}{HTML}{A25B00}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=turquesa,
+  urlcolor=turquesa,
+  pdftitle={Mi primer laboratorio seguro de ciberseguridad},
+  pdfauthor={Juan Skobalski}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gris} Ciberseguridad | Unidad 2 | Preentrega 2}
+\fancyhead[R]{\small\color{gris} Juan Skobalski}
+\fancyfoot[C]{\small\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linea}\leaders\hrule height \headrulewidth\hfill}}
+\titleformat{\section}[block]{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}[block]{\large\bfseries\color{turquesa}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+\setlist[itemize]{leftmargin=1.35em,itemsep=3pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.55em,itemsep=3pt,topsep=4pt}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+
+% El reporte se identifica como completo solamente cuando están las cinco evidencias.
+\newif\ifreportcomplete
+\IfFileExists{capturas/01-red-nat.png}{%
+  \IfFileExists{capturas/02-usuario-sin-privilegios.png}{%
+    \IfFileExists{capturas/03-permisos-ls-l.png}{%
+      \IfFileExists{capturas/04-apt-actualizado.png}{%
+        \IfFileExists{capturas/05-snapshot-hardening.png}{\reportcompletetrue}{\reportcompletefalse}%
+      }{\reportcompletefalse}%
+    }{\reportcompletefalse}%
+  }{\reportcompletefalse}%
+}{\reportcompletefalse}
+
+\newcommand{\evidenceblock}[2]{%
+  \begin{center}
+  \IfFileExists{#1}{%
+    \includegraphics[width=0.95\textwidth,height=10.8cm,keepaspectratio]{#1}\\[3pt]
+    {\small\color{gris}#2}
+  }{%
+    \fcolorbox{linea}{fondo}{%
+      \parbox[c][8.2cm][c]{0.89\textwidth}{%
+        \centering
+        {\Large\color{pendiente}\textbf{Evidencia pendiente}}\\[8pt]
+        {\small Guardar la captura como \path{#1}}}}
+  }
+  \end{center}
+}
+
+\newcommand{\controlsummary}[3]{%
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.0cm} >{\raggedright\arraybackslash}X}
+    Configuración & #1\\
+    Objetivo & #2\\
+    Verificación & #3\\
+  \end{tabularx}
+}
+
+\begin{document}
+
+% Carátula
+\thispagestyle{empty}
+\vspace*{1.0cm}
+{\color{turquesa}\large C O D E R H O U S E}\par
+\vspace{0.4cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{2.1cm}
+{\color{gris}\Large CIBERSEGURIDAD}\par
+\vspace{0.45cm}
+{\color{azul}\Huge\bfseries Mi primer laboratorio seguro\\[5pt] de ciberseguridad}\par
+\vspace{0.45cm}
+{\color{turquesa}\LARGE VirtualBox, Ubuntu y recuperación mediante snapshots}\par
+\vspace{1.0cm}
+{\color{gris}\large Unidad 2 | Preentrega 2}\par
+
+\vspace{0.8cm}
+\ifreportcomplete
+  \colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{\centering\color{turquesa}\textbf{REPORTE CON EVIDENCIAS COMPLETAS}}}
+\else
+  \colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{\centering\color{pendiente}\textbf{BORRADOR - EVIDENCIAS PENDIENTES}}}
+\fi
+
+\vfill
+\noindent\colorbox{fondo}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+    \vspace{0.28cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Estudiante}}}Juan Skobalski\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Curso}}}Ciberseguridad\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Sistema invitado}}}Ubuntu Linux\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Fecha}}}21 de octubre de 2026\par
+    \vspace{0.28cm}
+  \end{minipage}}
+\vspace{0.75cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{0.25cm}
+{\small\color{gris}Reporte técnico de configuración de una máquina virtual destinada a prácticas controladas.}
+
+\newpage
+\section*{Introducción}
+\leavevmode\par
+
+Este reporte documenta la preparación de una máquina virtual con \textbf{Ubuntu Linux} para realizar prácticas iniciales de ciberseguridad. El laboratorio se ejecuta en VirtualBox sobre un equipo anfitrión y combina aislamiento de red, uso cotidiano con privilegios limitados, gestión de permisos, actualización de paquetes y una instantánea de recuperación.
+
+\subsection*{Objetivo y alcance}
+
+El objetivo es disponer de un entorno reproducible que permita aprender y probar configuraciones sin aplicar cambios directamente sobre el sistema anfitrión. El alcance comprende cinco controles verificables:
+
+\begin{enumerate}
+  \item red virtual en modo NAT;
+  \item usuario de prácticas sin privilegios administrativos permanentes;
+  \item permisos explícitos sobre un archivo de prueba;
+  \item índices y paquetes de Ubuntu actualizados mediante APT;
+  \item snapshot posterior al hardening básico.
+\end{enumerate}
+
+\subsection*{Criterio de seguridad}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.4cm} >{\raggedright\arraybackslash}X}
+  Aislamiento & La VM no se conecta como un dispositivo independiente a la red física. NAT permite actualizaciones salientes y bloquea conexiones entrantes no solicitadas, salvo que se configure un reenvío de puertos.\\
+  Menor privilegio & El usuario de práctica no administra el sistema de manera permanente; las tareas administrativas se realizan de forma puntual desde una cuenta autorizada.\\
+  Permisos & El acceso a archivos se limita mediante propietario, grupo y permisos de lectura o escritura.\\
+  Parches & APT consulta repositorios y aplica correcciones disponibles para reducir la exposición a vulnerabilidades conocidas.\\
+  Recuperación & La instantánea conserva un estado conocido al que se puede volver después de una práctica fallida.\\
+\end{tabularx}
+
+\subsection*{Relación con los ejercicios anteriores}
+
+El ejercicio 1 permitió crear la VM \texttt{ubuntu-coder}, probar una red Solo-Anfitrión y generar una instantánea base. Para esta entrega se reemplaza esa evidencia por NAT y por el snapshot solicitado. Del ejercicio 2 se retoman los criterios de menor privilegio, actualización y reducción de superficie de ataque, aplicados ahora a Ubuntu.
+
+\noindent\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{\textcolor{azul}{\textbf{Límite del control:}} NAT reduce la exposición de red, pero no neutraliza por sí mismo el software malicioso. También deben evitarse carpetas compartidas innecesarias, el portapapeles bidireccional y el reenvío de puertos.}}
+
+\newpage
+\section*{1. Fundación: VirtualBox y red aislada}
+
+\controlsummary
+{Adaptador 1 habilitado en modo \textbf{NAT}, con el cable virtual conectado.}
+{Permitir que Ubuntu acceda a los repositorios para actualizarse sin exponer la VM directamente como otro equipo de la red doméstica.}
+{Con la VM apagada, abrir \textit{Configuración > Red > Adaptador 1} y comprobar que ``Conectado a'' indique NAT.}
+
+\evidenceblock{capturas/01-red-nat.png}{Figura 1. Adaptador de red de la VM configurado en modo NAT.}
+
+\subsection*{Justificación}
+
+VirtualBox realiza la traducción de direcciones entre la VM y el exterior. La máquina invitada puede iniciar conexiones para descargar actualizaciones, mientras que los equipos de la red local no pueden iniciar conexiones hacia ella por defecto. Se evita el modo Puente porque incorporaría la VM a la misma red física que el host y aumentaría su visibilidad. Como medida adicional, no deben agregarse reglas de reenvío de puertos salvo que una práctica concreta las requiera.
+
+\newpage
+\section*{2. Ubuntu: usuario de práctica}
+
+\controlsummary
+{Cuenta local \texttt{practicas} sin pertenencia al grupo \texttt{sudo}.}
+{Aplicar el principio de menor privilegio y limitar el alcance de un error o de un proceso malicioso ejecutado durante una práctica.}
+{Iniciar sesión como \texttt{practicas} y ejecutar \texttt{whoami}, \texttt{id} y \texttt{sudo -l}; la salida debe identificar al usuario y demostrar que no puede usar sudo.}
+
+\evidenceblock{capturas/02-usuario-sin-privilegios.png}{Figura 2. Identidad y grupos de la cuenta de prácticas sin privilegios administrativos.}
+
+\subsection*{Interpretación}
+
+Ubuntu no habilita el inicio directo habitual como \texttt{root}. Además, separar la cuenta de prácticas de la cuenta administradora evita que todas las aplicaciones y comandos se ejecuten con capacidad de modificar el sistema. Cuando una tarea requiere administración, se vuelve a la cuenta autorizada y se utiliza \texttt{sudo} de manera puntual.
+
+\newpage
+\section*{3. Ubuntu: permisos de archivos}
+
+\controlsummary
+{Archivo \texttt{evidencia-lab.txt} con permisos \texttt{640} (\texttt{-rw-r-----}).}
+{Permitir lectura y escritura al propietario, solo lectura al grupo y ningún acceso al resto de los usuarios.}
+{Crear el archivo, aplicar \texttt{chmod 640} y ejecutar \texttt{ls -l} para observar permisos, propietario y grupo.}
+
+\evidenceblock{capturas/03-permisos-ls-l.png}{Figura 3. Permisos del archivo de prueba mostrados mediante \texttt{ls -l}.}
+
+\subsection*{Interpretación}
+
+La primera columna de \texttt{ls -l} representa el tipo de objeto y los permisos del propietario, del grupo y de otros usuarios. El valor \texttt{-rw-r-----} comprueba que el archivo no es ejecutable y que los usuarios ajenos al propietario y al grupo no pueden leerlo ni modificarlo.
+
+\newpage
+\section*{4. Ubuntu: gestión de actualizaciones}
+
+\controlsummary
+{Índices de paquetes consultados y actualizaciones elegibles instaladas mediante APT. Ubuntu mantiene 15 paquetes temporalmente diferidos por despliegue gradual.}
+{Aplicar correcciones de seguridad y reducir la posibilidad de explotar vulnerabilidades para las que ya existe un parche.}
+{Desde la cuenta administradora, ejecutar \texttt{sudo apt update} y \texttt{sudo apt full-upgrade}. Verificar que el comando finalice y diferencie los paquetes instalables de aquellos retenidos temporalmente por \textit{phasing}.}
+
+\evidenceblock{capturas/04-apt-actualizado.png}{Figura 4. APT confirma la consulta de repositorios y el estado actualizado de Ubuntu.}
+
+\subsection*{Interpretación}
+
+\texttt{apt update} renueva la información de los repositorios, pero no instala por sí solo los paquetes disponibles. Por ese motivo se acompaña con \texttt{apt full-upgrade}. En la evidencia, APT no instala nuevos paquetes y deja 15 componentes ``Not upgrading yet due to phasing''. Este comportamiento corresponde al despliegue gradual de Ubuntu: esas versiones todavía no fueron habilitadas para este equipo y se aplicarán automáticamente cuando alcance su fase, por lo que no representan una falla del proceso ejecutado.
+
+\newpage
+\section*{5. Red de seguridad: snapshot inicial}
+
+\controlsummary
+{Instantánea denominada \textbf{Clean Install - Hardening applied}.}
+{Conservar el estado estable posterior a la instalación, actualización y configuración básica de seguridad.}
+{Abrir el Administrador de instantáneas y comprobar que el nombre completo sea visible. Para futuras instantáneas base se recomienda apagar completamente la VM antes de crearlas.}
+
+\evidenceblock{capturas/05-snapshot-hardening.png}{Figura 5. Snapshot final del laboratorio después de aplicar el hardening inicial.}
+
+\newpage
+\section*{Resultado y conclusión}
+
+\ifreportcomplete
+Las evidencias demuestran que la VM dispone de conectividad saliente controlada, una cuenta de práctica con permisos limitados, permisos de archivo verificables, paquetes actualizados y un punto de recuperación posterior al hardening. En conjunto, estos controles forman una base adecuada para ejercicios posteriores, siempre que el nivel de aislamiento se ajuste al riesgo de cada práctica.
+\else
+La estructura y el análisis técnico están preparados, pero todavía faltan una o más capturas. El PDF se mantiene identificado como borrador hasta que las cinco evidencias permitan confirmar cada control.
+\fi
+
+El snapshot no reemplaza una copia de seguridad: depende de los archivos de la VM y sirve principalmente para volver con rapidez a un estado anterior. Antes de ejecutar herramientas o muestras de mayor riesgo se debe evaluar el uso de Red Interna o desconectar completamente la interfaz virtual.
+
+\subsection*{Checklist de entrega}
+
+\begin{itemize}
+  \item La VM elegida utiliza Ubuntu Linux.
+  \item El Adaptador 1 figura en modo NAT.
+  \item La cuenta \texttt{practicas} no pertenece al grupo \texttt{sudo}.
+  \item \texttt{ls -l} muestra los permisos de un archivo creado para la práctica.
+  \item APT demuestra que los repositorios fueron consultados y los paquetes actualizados.
+  \item La instantánea se denomina \textit{Clean Install - Hardening applied}.
+  \item Las capturas son legibles y no muestran contraseñas ni datos sensibles.
+  \item El documento se entrega como \texttt{Reporte\_Laboratorio\_Seguro\_Skobalski\_Juan.pdf}.
+\end{itemize}
+
+\end{document}

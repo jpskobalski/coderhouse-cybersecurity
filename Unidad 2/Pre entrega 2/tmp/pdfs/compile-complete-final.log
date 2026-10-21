@@ -1,0 +1,192 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(Reporte_Laboratorio_Seguro_Skobalski_Juan.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/base\artic
+le.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/base\size1
+1.clo))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/geometry\g
+eometry.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics\k
+eyval.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/iftex\if
+vtex.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/iftex\if
+tex.sty))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/geometry\g
+eometry.cfg))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/base\fonte
+nc.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/base\input
+enc.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/babel\ba
+bel.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/babel\tx
+tbabel.def)
+*************************************
+* Local config file bblopts.cfg used
+*
+
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblo
+pts.cfg)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/babel-span
+ish\spanish.ldf))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/babel/lo
+cale/es\babel-spanish.tex)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern
+.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/microtype\
+microtype.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\e
+toolbox.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/microtype\
+microtype-pdftex.def)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/microtype\
+microtype.cfg))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xco
+lor.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics-c
+fg\color.cfg)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics-d
+ef\pdftex.def)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics\m
+athcolor.ltx))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics\g
+raphicx.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics\g
+raphics.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics\t
+rig.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/graphics-c
+fg\graphics.cfg)))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/tools\tabu
+larx.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/tools\arra
+y.sty))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\e
+numitem.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\f
+ancyhdr.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\h
+yperref.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/infwarer
+r\infwarerr.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\
+kvsetkeys.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/kvdefine
+keys\kvdefinekeys.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/pdfescap
+e\pdfescape.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\
+ltxcmds.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcm
+ds\pdftexcmds.sty))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hy
+color.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacr
+o\letltxmacro.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\au
+xhook.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\n
+ameref.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/refcount\r
+efcount.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/gettitle
+string\gettitlestring.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\
+kvoptions.sty)))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\p
+d1enc.def)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\
+intcalc.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\p
+uenc.def)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/url\url.st
+y)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/bitset\b
+itset.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/bigintca
+lc\bigintcalc.sty))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/base\atbeg
+shi-ltx.sty))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\h
+pdftex.def
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/base\atver
+yend-ltx.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilec
+heck\rerunfilecheck.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/generic/uniqueco
+unter\uniquecounter.sty)))
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/titlesec\t
+itlesec.sty)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.f
+d)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\
+l3backend-pdftex.def)
+(C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\tmp\pdfs\Reporte_Labora
+torio_Seguro_Skobalski_Juan.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/microtype\
+mt-cmr.cfg)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/context/base/mki
+i\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-p
+kg\epstopdf-base.sty
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\e
+pstopdf-sys.cfg))
+(C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\tmp\pdfs\Reporte_Labora
+torio_Seguro_Skobalski_Juan.out)
+(C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\tmp\pdfs\Reporte_Labora
+torio_Seguro_Skobalski_Juan.out)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.
+fd)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.
+fd)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy
+.fd)
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex
+.fd) [1{C:/Users/JuanPabloSkobalski/AppData/Local/MiKTeX/fonts/map/pdftex/pdfte
+x.map}{C:/Users/JuanPabloSkobalski/AppData/Local/Programs/MiKTeX/fonts/enc/dvip
+s/lm/lm-ec.enc}]
+(C:\Users\JuanPabloSkobalski\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.
+fd) [2]
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
+
+[3 <./capturas/01-red-nat.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
+
+[4 <./capturas/02-usuario-sin-privilegios.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
+
+[5 <./capturas/03-permisos-ls-l.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 208--209
+
+[6 <./capturas/04-apt-actualizado.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 222--223
+
+[7 <./capturas/05-snapshot-hardening.png>] [8]
+(C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\tmp\pdfs\Reporte_Labora
+torio_Seguro_Skobalski_Juan.aux) )
+(see the transcript file for additional information)<C:/Users/JuanPabloSkobalsk
+i/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Juan
+PabloSkobalski/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><
+C:/Users/JuanPabloSkobalski/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm
+/lmr10.pfb><C:/Users/JuanPabloSkobalski/AppData/Local/Programs/MiKTeX/fonts/typ
+e1/public/lm/lmr12.pfb><C:/Users/JuanPabloSkobalski/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/lm/lmr17.pfb><C:/Users/JuanPabloSkobalski/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/JuanPabloSkobalski/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
+Output written on "C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\tmp\p
+dfs\Reporte_Laboratorio_Seguro_Skobalski_Juan.pdf" (8 pages, 1306854 bytes).
+Transcript written on "C:\git\coderhouse-cybersecurity\Unidad 2\Pre entrega 2\t
+mp\pdfs\Reporte_Laboratorio_Seguro_Skobalski_Juan.log".

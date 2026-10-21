@@ -1,0 +1,214 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.25cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\definecolor{linea}{HTML}{CFDCE1}
+\definecolor{pendiente}{HTML}{A25B00}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=turquesa,
+  urlcolor=turquesa,
+  pdftitle={Reporte de Hardening en Windows},
+  pdfauthor={Juan Skobalski}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gris} Ciberseguridad | Unidad 2 | Ejercicio 2}
+\fancyhead[R]{\small\color{gris} Juan Skobalski}
+\fancyfoot[C]{\small\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linea}\leaders\hrule height \headrulewidth\hfill}}
+\titleformat{\section}[block]{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}[block]{\large\bfseries\color{turquesa}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+\setlist[itemize]{leftmargin=1.35em,itemsep=3pt,topsep=4pt}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+
+% El documento solo se identifica como final cuando existen las tres capturas.
+\newif\ifreportcomplete
+\IfFileExists{capturas/01-usuario-estandar.png}{%
+  \IfFileExists{capturas/02-windows-update.png}{%
+    \IfFileExists{capturas/03-smb1-deshabilitado.png}{\reportcompletetrue}{\reportcompletefalse}%
+  }{\reportcompletefalse}%
+}{\reportcompletefalse}
+
+\newcommand{\evidenceblock}[2]{%
+  \begin{center}
+  \IfFileExists{#1}{%
+    \includegraphics[width=0.94\textwidth,height=8.0cm,keepaspectratio]{#1}\\[3pt]
+    {\small\color{gris}#2}
+  }{%
+    \fcolorbox{linea}{fondo}{%
+      \parbox[c][6.5cm][c]{0.88\textwidth}{%
+        \centering
+        {\Large\color{pendiente}\textbf{Evidencia pendiente}}\\[8pt]
+        {\small Guardar la captura como \path{#1}}}}
+  }
+  \end{center}
+}
+
+\newcommand{\controlsummary}[3]{%
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.0cm} >{\raggedright\arraybackslash}X}
+    Configuración & #1\\
+    Objetivo & #2\\
+    Verificación & #3\\
+  \end{tabularx}
+}
+
+\begin{document}
+
+% Carátula
+\thispagestyle{empty}
+\vspace*{1.0cm}
+{\color{turquesa}\large C O D E R H O U S E}\par
+\vspace{0.4cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{2.3cm}
+{\color{gris}\Large CIBERSEGURIDAD}\par
+\vspace{0.45cm}
+{\color{azul}\Huge\bfseries Reporte de Hardening\\[5pt] en Windows}\par
+\vspace{0.45cm}
+{\color{turquesa}\LARGE Menor privilegio, actualizaciones y SMB 1.0}\par
+\vspace{1.0cm}
+{\color{gris}\large Unidad 2 | Ejercicio 2}\par
+
+\vspace{0.8cm}
+\ifreportcomplete
+  \colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{\centering\color{turquesa}\textbf{REPORTE CON EVIDENCIAS COMPLETAS}}}
+\else
+  \colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{\centering\color{pendiente}\textbf{BORRADOR - EVIDENCIAS PENDIENTES}}}
+\fi
+
+\vfill
+\noindent\colorbox{fondo}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+    \vspace{0.28cm}
+    \noindent\makebox[3.1cm][l]{\textcolor{azul}{\textbf{Estudiante}}}Juan Skobalski\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.1cm][l]{\textcolor{azul}{\textbf{Curso}}}Ciberseguridad\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.1cm][l]{\textcolor{azul}{\textbf{Fecha}}}15 de octubre de 2026\par
+    \vspace{0.28cm}
+  \end{minipage}}
+\vspace{0.75cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{0.25cm}
+{\small\color{gris}Aplicación y documentación de controles básicos de endurecimiento en una máquina virtual de Windows.}
+
+\newpage
+\section*{Introducción}
+\leavevmode\par
+
+El \textbf{hardening} es el proceso de reducir la superficie de ataque de un sistema mediante configuraciones seguras, eliminación de funciones innecesarias, actualización del software y aplicación del principio de menor privilegio. Esta práctica se realiza en una máquina virtual de Windows para evitar cambios directos sobre el equipo anfitrión y facilitar la recuperación mediante instantáneas.
+
+\subsection*{Objetivo y alcance}
+
+El ejercicio documenta tres controles básicos:
+
+\begin{enumerate}
+  \item creación de una cuenta estándar separada de la cuenta administradora;
+  \item ejecución de Windows Update para aplicar correcciones de seguridad;
+  \item desactivación de SMB 1.0/CIFS cuando no existe una necesidad de compatibilidad.
+\end{enumerate}
+
+El reporte se limita a estos controles y no constituye una auditoría integral de Windows. No evalúa el firewall, el antivirus, el cifrado de disco ni las políticas corporativas del sistema.
+
+\subsection*{Criterio de evaluación}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.2cm} >{\raggedright\arraybackslash}X}
+  Menor privilegio & Los usuarios deben disponer únicamente de los permisos necesarios para su actividad cotidiana.\\
+  Gestión de parches & El sistema debe recibir actualizaciones que corrijan vulnerabilidades conocidas.\\
+  Superficie de ataque & Los protocolos y componentes heredados que no sean necesarios deben permanecer deshabilitados.\\
+  Evidencia & Cada control debe estar respaldado por una captura legible de la VM de Windows.\\
+\end{tabularx}
+
+\subsection*{Resumen de controles}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.7cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+  Control & Riesgo reducido & Evidencia esperada\\
+  Cuenta estándar & Abuso de privilegios administrativos. & Tipo de cuenta visible.\\
+  Windows Update & Explotación de fallas ya corregidas. & Estado de actualización.\\
+  SMB 1.0 deshabilitado & Exposición de un protocolo heredado. & Casilla SMB 1.0/CIFS vacía.\\
+\end{tabularx}
+
+\vfill
+\noindent\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{\textcolor{azul}{\textbf{Precaución:}} antes de modificar cuentas o características de Windows, se debe crear una instantánea y comprobar que la contraseña de la cuenta administradora funciona.}}
+
+\newpage
+\section*{Aplicación de los controles}
+
+\subsection*{1. Cuenta de uso diario sin privilegios administrativos}
+
+\controlsummary
+{Cuenta local \texttt{standard} configurada como \textbf{Usuario estándar}.}
+{Aplicar menor privilegio para que las tareas cotidianas no se ejecuten con permisos administrativos.}
+{En \textit{Configuración > Cuentas > Otros usuarios}, comprobar el nombre de la cuenta y su tipo. La captura no debe mostrar contraseñas ni datos de recuperación.}
+
+\evidenceblock{capturas/01-usuario-estandar.png}{Figura 1. Cuenta de uso diario configurada como usuario estándar.}
+
+\newpage
+\section*{Actualización y gestión de parches}
+
+\subsection*{2. Actualización del sistema operativo}
+
+\controlsummary
+{Búsqueda e instalación de actualizaciones desde Windows Update.}
+{Corregir vulnerabilidades conocidas y mantener vigentes los componentes de seguridad del sistema.}
+{Comprobar que Windows Update esté buscando actualizaciones o informe que el sistema se encuentra actualizado. Reiniciar si el sistema lo solicita.}
+
+\evidenceblock{capturas/02-windows-update.png}{Figura 2. Estado de Windows Update dentro de la máquina virtual.}
+
+\newpage
+\section*{Reducción de la superficie de ataque}
+
+\subsection*{3. Desactivación de SMB 1.0/CIFS}
+
+\controlsummary
+{Compatibilidad con el protocolo SMB 1.0/CIFS deshabilitada.}
+{Evitar la exposición innecesaria de un protocolo heredado para compartir archivos.}
+{Abrir \textit{Activar o desactivar las características de Windows} y confirmar que la casilla de SMB 1.0/CIFS esté vacía.}
+
+\evidenceblock{capturas/03-smb1-deshabilitado.png}{Figura 3. Característica SMB 1.0/CIFS deshabilitada.}
+
+\subsection*{Resultado y conclusión}
+
+\ifreportcomplete
+Las evidencias incorporadas documentan la separación entre el uso cotidiano y la administración, el funcionamiento del mecanismo de actualización y la desactivación de un protocolo heredado. En conjunto, estos controles reducen privilegios, corrigen vulnerabilidades conocidas y eliminan una función innecesaria de la superficie de ataque.
+\else
+La estructura del reporte y el análisis técnico están preparados, pero todavía faltan una o más capturas de la máquina virtual. El documento no debe presentarse como evidencia final hasta reemplazar todos los recuadros pendientes y verificar que las imágenes permitan confirmar cada control.
+\fi
+
+El hardening debe tratarse como un proceso continuo. Después de instalar aplicaciones, cambiar servicios o aplicar nuevas actualizaciones, corresponde revisar nuevamente la configuración y conservar un punto de restauración funcional.
+
+\subsection*{Checklist de entrega}
+
+\begin{itemize}
+  \item La cuenta de uso diario figura como usuario estándar.
+  \item Windows Update aparece funcionando o con el sistema actualizado.
+  \item SMB 1.0/CIFS aparece deshabilitado.
+  \item Las capturas son legibles y no muestran información sensible.
+  \item El PDF se entrega como \texttt{Reporte\_Hardening\_Skobalski\_Juan.pdf}.
+\end{itemize}
+
+\end{document}
