@@ -1,0 +1,7 @@
+# Archivos temporales de compilación y revisión
+**/tmp/
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz

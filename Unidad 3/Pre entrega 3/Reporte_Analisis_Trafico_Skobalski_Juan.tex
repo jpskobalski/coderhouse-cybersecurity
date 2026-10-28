@@ -1,0 +1,268 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.25cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{booktabs}
+
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\definecolor{linea}{HTML}{CFDCE1}
+\definecolor{seguro}{HTML}{19724B}
+\definecolor{riesgo}{HTML}{A2472E}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=turquesa,
+  urlcolor=turquesa,
+  pdftitle={Reporte de Análisis de Tráfico},
+  pdfauthor={Juan Skobalski}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gris}Ciberseguridad | Unidad 3 | Preentrega 3}
+\fancyhead[R]{\small\color{gris}Juan Skobalski}
+\fancyfoot[C]{\small\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linea}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}[block]{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}[block]{\large\bfseries\color{turquesa}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+\setlist[itemize]{leftmargin=1.35em,itemsep=3pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.55em,itemsep=4pt,topsep=4pt}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+
+\newcommand{\infobox}[1]{%
+  \noindent\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{#1}}}
+
+\newcommand{\evidence}[3]{%
+  \begin{center}
+    \includegraphics[width=0.98\textwidth,height=#1\textheight,keepaspectratio]{#2}
+    \par\vspace{5pt}
+    {\small\color{gris}#3}
+  \end{center}}
+
+\newcommand{\reportpage}{%
+  \clearpage
+  \thispagestyle{fancy}}
+
+\begin{document}
+
+% Carátula
+\thispagestyle{empty}
+\vspace*{1.0cm}
+{\color{turquesa}\large C O D E R H O U S E}\par
+\vspace{0.4cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{2.2cm}
+{\color{gris}\Large CIBERSEGURIDAD}\par
+\vspace{0.45cm}
+{\color{azul}\Huge\bfseries Reporte de Análisis\newline de Tráfico}\par
+\vspace{0.45cm}
+{\color{turquesa}\LARGE Protocolos, texto claro y conexiones seguras}\par
+\vspace{1.0cm}
+{\color{gris}\large Unidad 3 | Preentrega 3}\par
+
+\vfill
+\noindent\colorbox{fondo}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+    \vspace{0.28cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Estudiante}}}Juan Skobalski\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Curso}}}Ciberseguridad\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Herramienta}}}Wireshark 4.6.9\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Fecha}}}28 de octubre de 2026\par
+    \vspace{0.28cm}
+  \end{minipage}}
+\vspace{0.75cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{0.25cm}
+{\small\color{gris}Análisis controlado de DNS, TCP, HTTP y TLS sobre tráfico generado desde el equipo propio.}
+
+\reportpage
+\section*{Introducción}
+
+Este reporte documenta una captura controlada del tráfico generado desde la computadora del estudiante. El objetivo es identificar los protocolos que intervienen en una navegación web, comparar una comunicación HTTP sin cifrado con una comunicación HTTPS protegida por TLS y reconocer el establecimiento de una conexión TCP mediante el \textit{three-way handshake}.
+
+\subsection*{Alcance y metodología}
+
+La captura se realizó con Wireshark sobre la interfaz Wi-Fi de Windows. El tráfico HTTP se generó desde Brave al visitar \url{http://http.badssl.com/}; este sitio de prueba reemplazó a NeverSSL porque no cargó correctamente en la conexión utilizada. Para HTTPS se visitó \url{https://www.wikipedia.org/}. No se enviaron credenciales ni datos personales.
+
+Para garantizar una evidencia DNS legible, se efectuó además una consulta controlada a \texttt{8.8.8.8} mediante \texttt{nslookup}. Esta consulta evita que la caché interna o la resolución cifrada del navegador oculten el intercambio DNS tradicional.
+
+\infobox{\textcolor{azul}{\textbf{Criterio ético:}} la observación se limitó al tráfico propio y a servicios públicos de prueba. La navegación HTTP no incluyó información sensible.}
+
+\subsection*{Inventario de protocolos}
+
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azul}}p{2.0cm} >{\raggedright\arraybackslash}p{4.4cm} >{\raggedright\arraybackslash}X}
+  Protocolo & Función observada & Evaluación de seguridad \\
+  \toprule
+  DNS & Resuelve nombres de dominio a direcciones IP. & El DNS tradicional no cifra las consultas y puede exponer los dominios consultados. \\
+  TCP & Establece conexiones confiables y ordenadas. & No cifra por sí mismo; la protección depende de las capas superiores. \\
+  HTTP & Transporta solicitudes y respuestas web. & \textcolor{riesgo}{\textbf{Inseguro:}} transmite encabezados y contenido en texto claro. \\
+  TLS & Cifra y autentica la comunicación HTTPS. & \textcolor{seguro}{\textbf{Seguro:}} protege confidencialidad e integridad durante el tránsito. \\
+  UDP & Transporta datagramas sin establecer conexión. & No incorpora cifrado ni autenticación por sí mismo. \\
+  ARP & Relaciona direcciones IPv4 con direcciones MAC en la LAN. & No autentica respuestas y puede ser objeto de suplantación en la red local. \\
+\end{tabularx}
+
+\reportpage
+\section*{Evidencia del inventario}
+
+La ventana \textit{Protocol Hierarchy Statistics} resume 3904 tramas de la sesión y permite verificar la presencia simultánea de protocolos de enlace, red, transporte, resolución y aplicación.
+
+\evidence{0.32}{capturas/01_inventario_protocolos.png}{Figura 1. Jerarquía de protocolos observada en la captura.}
+
+\subsection*{Interpretación}
+
+\begin{itemize}
+  \item Ethernet e IPv4 forman la base de la comunicación capturada.
+  \item UDP concentra tráfico de DNS, STUN y otros servicios que no establecen una conexión previa.
+  \item TCP transporta tanto HTTP sin cifrado como sesiones protegidas por TLS.
+  \item ARP aparece como protocolo local para relacionar direcciones IPv4 y MAC.
+  \item Los porcentajes representan esta sesión particular y pueden cambiar según las aplicaciones abiertas.
+\end{itemize}
+
+\reportpage
+\section*{1. Análisis DNS}
+
+Se generó una consulta de tipo \texttt{A} para \texttt{http.badssl.com} contra el servidor DNS \texttt{8.8.8.8}. La respuesta devolvió la dirección IPv4 \texttt{104.154.89.105}, que coincide con el servidor observado posteriormente en la conexión HTTP.
+
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azul}}p{4.0cm} >{\raggedright\arraybackslash}X}
+  Dominio consultado & \texttt{http.badssl.com} \\
+  Tipo de registro & \texttt{A} (dirección IPv4) \\
+  Servidor consultado & \texttt{8.8.8.8} \\
+  Dirección obtenida & \texttt{104.154.89.105} \\
+  Tiempo informado & 124,68 ms \\
+\end{tabularx}
+
+\evidence{0.56}{capturas/02_dns_resolucion.png}{Figura 2. Consulta y respuesta DNS con el registro A de http.badssl.com.}
+
+La captura también contiene una consulta \texttt{AAAA}. El servidor responde sin una dirección IPv6 utilizable y proporciona información de autoridad. Para el ejercicio se utiliza el registro \texttt{A}, ya que la conexión HTTP observada empleó IPv4.
+
+\reportpage
+\section*{2. Solicitud HTTP en texto claro}
+
+El filtro \texttt{http.request \&\& http.host contains ``badssl''} aisló las solicitudes HTTP. En el paquete seleccionado se distinguen directamente el método, el host, la URI y varios encabezados del navegador.
+
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azul}}p{3.6cm} >{\raggedright\arraybackslash}X}
+  Método & \texttt{GET} \\
+  Host & \texttt{http.badssl.com} \\
+  URI & \texttt{/} \\
+  Versión & \texttt{HTTP/1.1} \\
+  Destino & \texttt{104.154.89.105:80} \\
+\end{tabularx}
+
+\evidence{0.58}{capturas/03_http_solicitud_get.png}{Figura 3. Solicitud HTTP GET y encabezados legibles en texto claro.}
+
+\infobox{\textcolor{azul}{\textbf{Hallazgo:}} el método, el dominio, la ruta, el idioma aceptado y el agente de usuario aparecen legibles tanto en el detalle como en la representación ASCII del paquete.}
+
+\reportpage
+\section*{3. Respuesta HTTP}
+
+El flujo TCP número 18 contiene la solicitud principal y sus respuestas. El servidor devolvió \texttt{HTTP/1.1 200 OK}, lo que indica que la solicitud fue procesada correctamente. También son visibles el tipo de contenido, el servidor web, la fecha y otros encabezados.
+
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azul}}p{3.6cm} >{\raggedright\arraybackslash}X}
+  Código de estado & \texttt{200} \\
+  Descripción & \texttt{OK} \\
+  Tipo de contenido & \texttt{text/html} \\
+  Servidor & \texttt{nginx/1.10.3 (Ubuntu)} \\
+  Flujo analizado & \texttt{tcp.stream eq 18} \\
+\end{tabularx}
+
+\evidence{0.58}{capturas/04_http_respuesta_200.png}{Figura 4. Respuesta HTTP 200 OK y encabezados visibles.}
+
+La visibilidad de solicitud y respuesta demuestra que HTTP no proporciona confidencialidad. Si el cuerpo incluyera credenciales, mensajes o datos personales, un observador con acceso al tráfico podría interpretarlos directamente.
+
+\reportpage
+\section*{4. Tráfico HTTPS protegido con TLS}
+
+La conexión a Wikipedia quedó identificada como el flujo TCP número 32. El \textit{Client Hello} muestra el nombre de servidor \texttt{www.wikipedia.org} y la sesión continúa con TLS 1.3. Los paquetes posteriores aparecen como \textit{Application Data}, pero su carga útil se presenta como \textit{Encrypted Application Data}.
+
+\evidence{0.58}{capturas/05_tls_application_data.png}{Figura 5. Flujo TLS 1.3 de Wikipedia con datos de aplicación cifrados.}
+
+\subsection*{Diferencias respecto de HTTP}
+
+\begin{itemize}
+  \item En HTTP se leen el método, el recurso, los encabezados y el código de respuesta.
+  \item En HTTPS, Wireshark identifica TLS y observa tamaños, direcciones y tiempos, pero no puede leer directamente el contenido web.
+  \item TLS protege la confidencialidad y la integridad de los datos, además de autenticar al servidor mediante certificados.
+\end{itemize}
+
+El valor heredado \texttt{0x0303} que puede aparecer dentro del registro se conserva por compatibilidad con versiones anteriores; la sesión fue reconocida por Wireshark como TLS 1.3.
+
+\reportpage
+\section*{5. Three-Way Handshake de TCP}
+
+Antes de transportar HTTP, TCP establece una conexión lógica. En el flujo 18 se identificaron los tres mensajes consecutivos entre el cliente \texttt{172.20.0.98} y el servidor \texttt{104.154.89.105} en el puerto 80:
+
+\begin{enumerate}
+  \item \textbf{SYN:} el cliente solicita iniciar la conexión y comunica sus parámetros iniciales.
+  \item \textbf{SYN, ACK:} el servidor acepta la solicitud y confirma la recepción del SYN.
+  \item \textbf{ACK:} el cliente confirma la respuesta; a partir de este punto puede comenzar el intercambio HTTP.
+\end{enumerate}
+
+\evidence{0.58}{capturas/06_tcp_handshake.png}{Figura 6. SYN, SYN-ACK y ACK pertenecientes al mismo flujo TCP.}
+
+El tercer paquete seleccionado muestra \texttt{Flags: 0x010 (ACK)}, con el bit de confirmación activo y el bit SYN desactivado. Por eso el filtro \texttt{tcp.flags.syn == 1} permite encontrar los dos primeros mensajes, pero no muestra por sí solo el ACK final.
+
+\reportpage
+\section*{6. Análisis de seguridad}
+
+\subsection*{¿Por qué HTTP es inseguro?}
+
+HTTP no incorpora cifrado, autenticación criptográfica del servidor ni verificación criptográfica de integridad. Un atacante situado en la misma red o en otro punto del recorrido podría leer el contenido, registrar información sensible o intentar modificar la comunicación.
+
+En esta captura fue posible observar el método \texttt{GET}, el host, la URI, la versión HTTP, el agente de usuario, encabezados de idioma y compresión, el código \texttt{200}, el tipo de contenido y el software del servidor. El laboratorio no transmitió credenciales, pero una solicitud HTTP real podría exponerlas.
+
+\subsection*{Ventajas de HTTPS}
+
+HTTPS encapsula HTTP dentro de TLS. Esto aporta:
+
+\begin{itemize}
+  \item \textbf{Confidencialidad:} el contenido de aplicación se cifra.
+  \item \textbf{Integridad:} las alteraciones de los registros protegidos pueden detectarse.
+  \item \textbf{Autenticación:} el certificado permite verificar la identidad declarada por el servidor.
+\end{itemize}
+
+HTTPS no oculta toda la metadata: las direcciones IP, los tamaños, los tiempos y, según la configuración, ciertos nombres de dominio pueden seguir siendo observables.
+
+\subsection*{Aporte y límite de una VPN}
+
+Una VPN cifra el tráfico entre el dispositivo y el servidor VPN. Esto protege frente a observadores de una red Wi-Fi pública y reduce la visibilidad para la red local. Sin embargo, no reemplaza HTTPS: la protección de la VPN termina en su servidor, se traslada confianza al proveedor y el tramo posterior aún necesita TLS para mantener la seguridad hasta el sitio web.
+
+\subsection*{Recomendaciones}
+
+\begin{itemize}
+  \item No introducir credenciales ni información personal en sitios HTTP.
+  \item Verificar el uso de HTTPS y las advertencias de certificado del navegador.
+  \item Mantener actualizados el navegador, el sistema operativo y Wireshark.
+  \item Utilizar una VPN confiable en redes públicas sin considerarla sustituto de HTTPS.
+  \item Emplear DNS cifrado en el uso cotidiano cuando sea compatible con la política de la red.
+\end{itemize}
+
+\section*{Conclusión}
+
+La práctica permitió relacionar las capas observadas en una navegación real. DNS convirtió el nombre \texttt{http.badssl.com} en \texttt{104.154.89.105}; TCP estableció la conexión mediante SYN, SYN-ACK y ACK; HTTP transportó información completamente legible; y TLS 1.3 protegió los datos de aplicación intercambiados con Wikipedia.
+
+La principal conclusión es que el transporte confiable de TCP no equivale a una comunicación segura. La confidencialidad, la integridad y la autenticación del contenido web dependen de TLS. Por ello, HTTPS debe considerarse un requisito básico y no una característica opcional cuando se transmite cualquier información sensible.
+
+\end{document}

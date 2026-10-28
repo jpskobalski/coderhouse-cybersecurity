@@ -1,0 +1,216 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.25cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,babel}
+
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\definecolor{linea}{HTML}{CFDCE1}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=turquesa,
+  urlcolor=turquesa,
+  pdftitle={Observando redes en mi entorno cotidiano},
+  pdfauthor={Juan Skobalski}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gris} Ciberseguridad | Unidad 3 | Ejercicio 1}
+\fancyhead[R]{\small\color{gris} Juan Skobalski}
+\fancyfoot[C]{\small\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linea}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}[block]{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}[block]{\large\bfseries\color{turquesa}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+\setlist[itemize]{leftmargin=1.35em,itemsep=4pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.55em,itemsep=5pt,topsep=4pt}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.28}
+
+\newcommand{\infobox}[1]{%
+  \noindent\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{#1}}}
+
+\begin{document}
+
+% Carátula
+\thispagestyle{empty}
+\vspace*{1.0cm}
+{\color{turquesa}\large C O D E R H O U S E}\par
+\vspace{0.4cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{2.3cm}
+{\color{gris}\Large CIBERSEGURIDAD}\par
+\vspace{0.45cm}
+{\color{azul}\Huge\bfseries Observando redes en mi\\[5pt] entorno cotidiano}\par
+\vspace{0.45cm}
+{\color{turquesa}\LARGE Dispositivos, comunicación y paquetes de datos}\par
+\vspace{1.0cm}
+{\color{gris}\large Unidad 3 | Ejercicio 1}\par
+
+\vfill
+\noindent\colorbox{fondo}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+    \vspace{0.28cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Estudiante}}}Juan Skobalski\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Curso}}}Ciberseguridad\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Fecha}}}21 de octubre de 2026\par
+    \vspace{0.28cm}
+  \end{minipage}}
+\vspace{0.75cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{0.25cm}
+{\small\color{gris}Análisis de una red doméstica y del recorrido de los datos durante una actividad cotidiana.}
+
+\newpage
+\section*{Introducción}
+\leavevmode\par
+
+Una red es un conjunto de dispositivos conectados para intercambiar información. En el hogar, el router concentra las conexiones Wi-Fi, asigna direcciones IP privadas y dirige el tráfico dentro de la red local o hacia internet.
+
+Este ejercicio identifica cinco dispositivos de uso cotidiano, analiza cómo pueden comunicarse y describe el recorrido de los datos al reproducir un video de YouTube desde un teléfono.
+
+\subsection*{Objetivo y alcance}
+
+El objetivo es distinguir entre comunicaciones que pueden permanecer dentro de la red local y aquellas que requieren servidores externos. El análisis representa un escenario doméstico general. En la lámpara y el lavarropas, el funcionamiento exacto depende de la aplicación y de la arquitectura elegida por cada fabricante.
+
+\subsection*{Entorno observado}
+
+Todos los equipos utilizan el punto de acceso Wi-Fi del router. Cada uno recibe una dirección privada, por ejemplo \texttt{192.168.1.10}, que lo identifica dentro de la LAN. Cuando el destino está en internet, el router aplica NAT y reenvía los paquetes al proveedor.
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=8mm and 13mm,
+  device/.style={draw=linea,fill=fondo,rounded corners=2pt,minimum width=3.3cm,minimum height=0.9cm,align=center,text=azul},
+  router/.style={draw=turquesa,fill=turquesa!10,rounded corners=2pt,minimum width=3.6cm,minimum height=1.1cm,align=center,text=azul,font=\bfseries},
+  link/.style={-{Latex[length=2mm]},draw=gris,thick}
+]
+  \node[router] (r) {Router doméstico\\Wi-Fi, LAN y NAT};
+  \node[device,above left=of r] (mac) {MacBook Air M5};
+  \node[device,above right=of r] (phone) {iPhone 17};
+  \node[device,left=of r] (printer) {Impresora HP Inkjet};
+  \node[device,right=of r] (lamp) {Lámpara Smart Home};
+  \node[device,below=of r] (washer) {Lavarropas Midea};
+  \draw[link] (mac) -- (r);
+  \draw[link] (phone) -- (r);
+  \draw[link] (printer) -- (r);
+  \draw[link] (lamp) -- (r);
+  \draw[link] (washer) -- (r);
+\end{tikzpicture}
+\end{center}
+
+\infobox{\textcolor{azul}{\textbf{Idea central:}} estar conectado al mismo Wi-Fi permite formar parte de la misma red local, pero no garantiza que todas las funciones operen sin internet. Algunos fabricantes procesan las órdenes mediante servicios en la nube.}
+
+\newpage
+\section*{Inventario de dispositivos}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.3cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+  Dispositivo & Comunicación local & Uso de internet\\
+  \hline
+  MacBook Air M5 & Envía documentos a la impresora y puede intercambiar información con equipos autorizados. & Navegación, nube, actualizaciones y videollamadas.\\
+  iPhone 17 & Descubre la impresora y puede controlar equipos inteligentes compatibles. & Mensajería, navegación, copias en la nube y contenido multimedia.\\
+  Impresora HP Inkjet con Wi-Fi & Recibe trabajos desde la MacBook o el iPhone. & Internet es opcional para imprimir localmente; puede usarse para actualizaciones o servicios remotos.\\
+  Lámpara Smart Home & Puede recibir órdenes locales si la aplicación y el producto lo admiten. & Puede depender de la nube para control remoto, automatizaciones o integración con una cuenta.\\
+  Lavarropas Midea con Wi-Fi & Puede ser detectado o configurado desde la aplicación dentro del hogar. & Suele utilizar servicios externos para control remoto, avisos y actualizaciones.\\
+\end{tabularx}
+
+\subsection*{Comunicación dentro de la LAN}
+
+Si la MacBook envía un documento a la impresora, ambos equipos intercambian paquetes mediante el router o su switch integrado. El tráfico puede permanecer dentro de la vivienda y la conexión del proveedor no es indispensable para transportar el trabajo de impresión.
+
+\subsection*{Comunicación con internet}
+
+Cuando el iPhone solicita un video o el lavarropas informa que terminó un ciclo mediante una plataforma remota, los paquetes salen hacia el proveedor. El router traduce la dirección privada mediante NAT y conserva la información necesaria para entregar la respuesta al dispositivo que inició la comunicación.
+
+\subsection*{Dependencia de servicios externos}
+
+Los dispositivos inteligentes no funcionan todos de la misma manera. Algunos permiten control local y otros envían cada orden a un servidor del fabricante. En el segundo caso, una interrupción de internet puede impedir el control desde la aplicación aunque el teléfono y el dispositivo continúen conectados al mismo Wi-Fi.
+
+\newpage
+\section*{Recorrido de los datos}
+
+\subsection*{Acción elegida: reproducir YouTube en el iPhone}
+
+El recorrido posible es el siguiente:
+
+\begin{enumerate}
+  \item El usuario abre YouTube en el iPhone y selecciona un video.
+  \item El teléfono envía la solicitud por Wi-Fi al router doméstico.
+  \item La aplicación consulta la dirección del servicio y establece una conexión cifrada.
+  \item El router reenvía los paquetes al proveedor de internet.
+  \item Los paquetes atraviesan redes intermedias hasta un servidor de YouTube o una red de distribución de contenido (CDN).
+  \item El servidor responde enviando el video en múltiples partes y paquetes.
+  \item La respuesta vuelve al proveedor, llega al router y se entrega al iPhone.
+  \item El teléfono ordena los datos, reconstruye el contenido y comienza a reproducirlo mientras descarga las partes siguientes.
+\end{enumerate}
+
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+  node distance=8mm,
+  box/.style={draw=linea,fill=fondo,rounded corners=2pt,minimum width=7.3cm,minimum height=0.9cm,align=center,text=azul},
+  link/.style={<->,>=Latex,draw=turquesa,thick}
+]
+  \node[box] (a) {iPhone 17};
+  \node[box,below=of a] (b) {Router doméstico};
+  \node[box,below=of b] (c) {Proveedor de internet};
+  \node[box,below=of c] (d) {Redes intermedias};
+  \node[box,below=of d] (e) {Servidor de YouTube o CDN};
+  \draw[link] (a) -- node[right,font=\small]{Wi-Fi} (b);
+  \draw[link] (b) -- (c);
+  \draw[link] (c) -- (d);
+  \draw[link] (d) -- (e);
+\end{tikzpicture}
+\end{center}
+
+La comunicación es bidireccional: además de recibir video, el iPhone envía confirmaciones y nuevas solicitudes. El servidor puede ajustar la calidad según la velocidad disponible y continuar enviando las partes necesarias.
+
+\newpage
+\section*{Paquetes de datos}
+
+La información no se transporta como un único bloque. Se divide en unidades pequeñas que contienen una parte de los datos y la información de control necesaria para reconocer su origen, destino y posición dentro de la comunicación.
+
+\subsection*{Ventajas del sistema}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{4.0cm} >{\raggedright\arraybackslash}X}
+  Uso eficiente & Los paquetes de diferentes usuarios y aplicaciones pueden compartir los mismos enlaces.\\
+  Recuperación ante pérdidas & Si una parte no llega, se vuelve a enviar solamente la información afectada.\\
+  Elección de rutas & Los paquetes pueden atravesar caminos distintos según la disponibilidad de las redes.\\
+  Reconstrucción ordenada & La información de control permite ordenar las partes y reconstruir el contenido original.\\
+  Escalabilidad & La infraestructura puede transportar páginas, mensajes, audio, video y archivos para una gran cantidad de equipos.\\
+\end{tabularx}
+
+\subsection*{Ejemplo aplicado}
+
+Durante la reproducción de YouTube, la pérdida de un paquete no obliga a descargar nuevamente todo el video. Los mecanismos de transporte pueden recuperar la parte faltante, mientras otras partes continúan llegando y la aplicación utiliza su memoria intermedia para evitar interrupciones.
+
+\subsection*{Conclusión}
+
+La red doméstica combina comunicaciones locales y conexiones con servicios externos. La impresora puede funcionar principalmente dentro de la LAN, mientras que el iPhone, la computadora y los dispositivos inteligentes utilizan internet para muchas de sus funciones.
+
+El router vincula ambos espacios: organiza el tráfico local y actúa como salida hacia otras redes. La división de la información en paquetes permite compartir esa infraestructura de manera eficiente, recuperar datos perdidos y entregar cada comunicación al destino correcto.
+
+\infobox{\textcolor{azul}{\textbf{Síntesis:}} dispositivo, router, proveedor, redes intermedias y servidor forman el recorrido básico. La respuesta vuelve por la misma cadena lógica hasta que la aplicación reconstruye la información.}
+
+\end{document}

@@ -1,0 +1,184 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.25cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{float}
+
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\definecolor{linea}{HTML}{CFDCE1}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=turquesa,
+  urlcolor=turquesa,
+  pdftitle={Laboratorio de observación de tráfico con Wireshark},
+  pdfauthor={Juan Skobalski}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\small\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\titleformat{\section}[block]{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}[block]{\large\bfseries\color{turquesa}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+\setlist[itemize]{leftmargin=1.35em,itemsep=4pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.55em,itemsep=5pt,topsep=4pt}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+
+\newcommand{\infobox}[1]{%
+  \noindent\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{#1}}}
+
+\newcommand{\reportpage}{%
+  \clearpage
+  \thispagestyle{fancy}
+  \noindent{\small\color{gris}Ciberseguridad | Unidad 3 | Ejercicio 2}%
+  \hfill{\small\color{gris}Juan Skobalski}\par
+  \vspace{0.25cm}
+  {\color{linea}\hrule height 0.4pt}\par
+  \vspace{0.9cm}}
+
+\newcommand{\evidence}[3]{%
+  \begin{center}
+    \centering
+    \includegraphics[width=#1\textwidth,height=0.56\textheight,keepaspectratio]{#2}
+    \par\vspace{6pt}
+    {\small\color{gris}#3}
+  \end{center}}
+
+\begin{document}
+
+% Carátula
+\thispagestyle{empty}
+\vspace*{1.0cm}
+{\color{turquesa}\large C O D E R H O U S E}\par
+\vspace{0.4cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{2.3cm}
+{\color{gris}\Large CIBERSEGURIDAD}\par
+\vspace{0.45cm}
+{\color{azul}\Huge\bfseries Laboratorio de observación\\[5pt] de tráfico con Wireshark}\par
+\vspace{0.45cm}
+{\color{turquesa}\LARGE HTTP, TLS y handshake de TCP}\par
+\vspace{1.0cm}
+{\color{gris}\large Unidad 3 | Ejercicio 2}\par
+
+\vfill
+\noindent\colorbox{fondo}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+    \vspace{0.28cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Estudiante}}}Juan Skobalski\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Curso}}}Ciberseguridad\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Fecha}}}28 de octubre de 2026\par
+    \vspace{0.28cm}
+  \end{minipage}}
+\vspace{0.75cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{0.25cm}
+{\small\color{gris}Comparación de tráfico HTTP sin cifrado, registros TLS cifrados y establecimiento de una conexión TCP.}
+
+\reportpage
+\section*{Introducción}
+
+Este reporte documenta una observación controlada de tráfico propio con Wireshark. El objetivo es comparar la información visible en una solicitud HTTP con los datos protegidos por TLS durante una conexión HTTPS y reconocer el handshake de tres pasos utilizado por TCP.
+
+\subsection*{Alcance y entorno}
+
+La captura se realizó sobre la interfaz Wi-Fi activa del equipo y el tráfico se generó desde el navegador Brave. Para HTTP se utilizó \url{http://http.badssl.com/}; para HTTPS se abrió un sitio seguro en una ventana privada. No se ingresaron credenciales ni información personal durante la práctica.
+
+\infobox{\textcolor{azul}{\textbf{Criterio de observación:}} las capturas muestran tráfico generado por el propio equipo. La prueba HTTP se limita a una solicitud GET sin datos sensibles.}
+
+\subsection*{Herramientas y filtros}
+
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azul}}p{3.1cm} >{\raggedright\arraybackslash}X}
+  Herramienta & Wireshark sobre la interfaz Wi-Fi de Windows.\\
+  Navegador & Brave en una ventana privada.\\
+  HTTP & \texttt{http.request \&\& http.host contains ``badssl''}\\
+  TLS & Flujo TCP aislado y registros con contenido de aplicación tipo 23.\\
+  TCP & Flujo identificado mediante \texttt{tcp.stream eq 9}.\\
+\end{tabularx}
+
+\subsection*{Resultado general}
+
+HTTP permitió leer el método, el recurso, el dominio y los encabezados de la solicitud. En la conexión TLS, Wireshark reconoció registros de datos de aplicación, pero mostró su contenido como bytes cifrados. El flujo TCP comenzó con la secuencia SYN, SYN-ACK y ACK.
+
+\reportpage
+\section*{Tráfico HTTP sin cifrado}
+
+Se abrió BadSSL utilizando explícitamente el esquema \texttt{http://}. El filtro aplicado aisló las solicitudes dirigidas a ese dominio. En el paquete seleccionado se observan en texto claro el método \texttt{GET}, la ruta solicitada, el encabezado \texttt{Host}, el agente de usuario y otros campos HTTP.
+
+\evidence{1.0}{capturas/01_http_get_texto_claro.png}{Solicitud HTTP GET y encabezados visibles en texto claro.}
+
+\infobox{\textcolor{azul}{\textbf{Observación:}} la columna de información muestra \texttt{GET / HTTP/1.1}; en los detalles aparece \texttt{Host: http.badssl.com}. La representación ASCII permite leer los mismos encabezados dentro del paquete capturado.}
+
+\reportpage
+\section*{Tráfico protegido con TLS}
+
+Para la segunda prueba se aisló una conexión HTTPS y se filtraron los registros cuyo tipo de contenido es \textit{Application Data}. Wireshark identifica la versión TLS y el protocolo transportado, pero no muestra el contenido HTTP original porque la carga útil está cifrada.
+
+\evidence{1.0}{capturas/02_tls_application_data.png}{Registro TLS Application Data con contenido cifrado.}
+
+El detalle presenta el campo \textit{Encrypted Application Data} como una secuencia hexadecimal. A diferencia de la captura HTTP, no se pueden leer el recurso solicitado, los encabezados ni los datos de la aplicación.
+
+\infobox{\textcolor{azul}{\textbf{Diferencia principal:}} HTTP expone el contenido de aplicación; TLS protege esa información durante el tránsito y solamente deja visibles los datos necesarios para transportar la conexión.}
+
+\reportpage
+\section*{Handshake de TCP}
+
+Se aisló el flujo TCP número 9 asociado a la conexión HTTP. Las tres primeras filas muestran el establecimiento de la comunicación antes de que se envíe la solicitud web:
+
+\begin{enumerate}
+  \item El cliente \texttt{172.20.0.98} envía \textbf{SYN} al puerto 80 del servidor.
+  \item El servidor \texttt{104.154.89.105} responde con \textbf{SYN, ACK}.
+  \item El cliente confirma la conexión con \textbf{ACK}.
+\end{enumerate}
+
+\evidence{1.0}{capturas/03_tcp_handshake.png}{Handshake TCP y comienzo del intercambio HTTP en el mismo flujo.}
+
+Después del tercer paso aparece la solicitud \texttt{GET / HTTP/1.1}. Esto demuestra que TCP establece primero la conexión lógica y luego transporta los datos del protocolo de aplicación.
+
+\reportpage
+\section*{Análisis de riesgo}
+
+Si un atacante pudiera capturar los paquetes de una sesión HTTP en la que se introduce una contraseña, podría leerla directamente porque HTTP no cifra el contenido transmitido. También podría observar otros datos de la solicitud, reutilizar las credenciales para intentar acceder a la cuenta o modificar el tráfico durante su recorrido. En HTTPS, TLS cifra la información de aplicación, por lo que una captura equivalente no permite leer directamente la contraseña. Por este motivo nunca se deben enviar credenciales mediante HTTP.
+
+\subsection*{Comparación de resultados}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.7cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+  Aspecto & HTTP & HTTPS con TLS\\
+  \hline
+  Contenido & Encabezados y datos legibles. & Carga útil cifrada.\\
+  Confidencialidad & No proporcionada. & Protegida durante el tránsito.\\
+  Integridad & No existe protección criptográfica propia. & TLS detecta alteraciones en los registros protegidos.\\
+  Puertos observados & TCP 80. & Habitualmente TCP 443.\\
+\end{tabularx}
+
+\subsection*{Conclusión}
+
+La práctica permitió verificar visualmente que TCP y TLS resuelven problemas distintos. TCP establece una comunicación ordenada mediante SYN, SYN-ACK y ACK. Sobre esa conexión puede circular HTTP sin cifrado o tráfico protegido con TLS.
+
+La evidencia HTTP demuestra por qué el texto plano representa un riesgo: los datos pueden ser interpretados directamente desde la captura. La evidencia TLS muestra que el contenido de aplicación se transforma en bytes cifrados. El uso de HTTPS es indispensable cuando se transmiten credenciales, mensajes u otra información sensible.
+
+\infobox{\textcolor{azul}{\textbf{Síntesis:}} TCP establece la conexión; HTTP define el intercambio web; TLS protege la confidencialidad e integridad del contenido durante su recorrido.}
+
+\end{document}
