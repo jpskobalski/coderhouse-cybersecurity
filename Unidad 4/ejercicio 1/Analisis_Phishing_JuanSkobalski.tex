@@ -1,0 +1,230 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.25cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{titlesec}
+\usepackage{booktabs}
+
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\definecolor{linea}{HTML}{CFDCE1}
+\definecolor{alerta}{HTML}{A2472E}
+\definecolor{seguro}{HTML}{19724B}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=turquesa,
+  urlcolor=alerta,
+  pdftitle={Análisis de phishing y smishing},
+  pdfauthor={Juan Skobalski}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gris}Ciberseguridad | Unidad 4 | Ejercicio 1}
+\fancyhead[R]{\small\color{gris}Juan Skobalski}
+\fancyfoot[C]{\small\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linea}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}[block]{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}[block]{\large\bfseries\color{turquesa}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+\setlist[itemize]{leftmargin=1.35em,itemsep=4pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.55em,itemsep=6pt,topsep=5pt}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.28}
+
+\newcommand{\infobox}[1]{%
+  \noindent\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{#1}}}
+
+\newcommand{\casebox}[2]{%
+  \noindent\fcolorbox{linea}{fondo}{%
+    \parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{%
+      \textcolor{azul}{\textbf{#1}}\par\vspace{5pt}#2}}}
+
+\newcommand{\reportpage}{\clearpage\thispagestyle{fancy}}
+
+\begin{document}
+
+% Carátula
+\thispagestyle{empty}
+\vspace*{1.0cm}
+{\color{turquesa}\large C O D E R H O U S E}\par
+\vspace{0.4cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{2.2cm}
+{\color{gris}\Large CIBERSEGURIDAD}\par
+\vspace{0.45cm}
+{\color{azul}\Huge\bfseries Análisis de Phishing\newline y Smishing}\par
+\vspace{0.45cm}
+{\color{turquesa}\LARGE Señales de alerta, manipulación y respuesta segura}\par
+\vspace{1.0cm}
+{\color{gris}\large Unidad 4 | Ejercicio 1}\par
+
+\vfill
+\noindent\colorbox{fondo}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep}
+    \vspace{0.28cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Estudiante}}}Juan Skobalski\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Curso}}}Ciberseguridad\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Tipo de análisis}}}Ingeniería social\par
+    \vspace{0.18cm}\color{linea}\hrule\color{black}\vspace{0.18cm}
+    \noindent\makebox[3.5cm][l]{\textcolor{azul}{\textbf{Fecha}}}3 de noviembre de 2026\par
+    \vspace{0.28cm}
+  \end{minipage}}
+\vspace{0.75cm}
+{\color{linea}\rule{\textwidth}{1.2pt}}\par
+\vspace{0.25cm}
+{\small\color{gris}Análisis de dos comunicaciones ficticias desde la perspectiva de un analista de seguridad junior.}
+
+\reportpage
+\section*{Introducción}
+
+El phishing es una técnica de ingeniería social que intenta lograr que una persona realice voluntariamente una acción perjudicial, como abrir un enlace, entregar credenciales o efectuar un pago. A diferencia de un ataque que explota directamente un defecto de software, el engaño busca aprovechar la confianza, la urgencia y las decisiones tomadas bajo presión.
+
+Este reporte analiza dos casos ficticios: un correo que suplanta a ``Soporte Apple'' y un SMS que simula provenir de Correos. El objetivo es identificar indicadores técnicos y psicológicos, y transformar el análisis en una recomendación sencilla que pueda aplicar un familiar sin conocimientos especializados.
+
+\subsection*{Alcance y criterio de análisis}
+
+El documento se limita a los puntos solicitados en el ejercicio:
+
+\begin{itemize}
+  \item descripción de los dos casos;
+  \item identificación de al menos cuatro señales de alerta en el correo;
+  \item explicación de la técnica psicológica utilizada en el SMS;
+  \item protocolo de respuesta de tres pasos.
+\end{itemize}
+
+No se abren los enlaces indicados ni se intenta comprobar si existen. El análisis se realiza únicamente a partir de la estructura visible de los mensajes, como corresponde a una evaluación segura.
+
+\infobox{\textcolor{azul}{\textbf{Principio de seguridad:}} un mensaje sospechoso debe analizarse sin interactuar con sus enlaces, archivos adjuntos ni datos de contacto. La verificación se realiza siempre por un canal independiente.}
+
+\subsection*{Resumen de los casos}
+
+\casebox{Caso A - Correo electrónico}{Un mensaje de ``Soporte Apple'' afirma que el Apple ID fue bloqueado y solicita acceder a \url{http://apple-id-security-check.info} para recuperarlo.}
+
+\vspace{8pt}
+\casebox{Caso B - Smishing}{Un SMS informa que un paquete de Correos fue retenido por una deuda aduanera de 1,20 euros y presenta un enlace acortado para realizar el pago.}
+
+\reportpage
+\section*{Caso A: correo de ``Soporte Apple''}
+
+El mensaje combina una supuesta autoridad reconocida, la amenaza de perder acceso a una cuenta y una acción inmediata. Ninguno de esos elementos demuestra autenticidad. La evaluación debe centrarse en datos verificables: el dominio, el protocolo, la dirección real del remitente y el procedimiento solicitado.
+
+\subsection*{Señales de alerta identificadas}
+
+\begin{tabularx}{\textwidth}{>{\centering\arraybackslash\bfseries\color{alerta}}p{0.7cm} >{\raggedright\arraybackslash\bfseries\color{azul}}p{3.7cm} >{\raggedright\arraybackslash}X}
+  N.º & Señal & Explicación \\
+  \toprule
+  1 & Dominio ajeno a Apple & El dominio registrable es \texttt{apple-id-security-check.info}, no \texttt{apple.com}. Incluir la marca dentro del nombre no demuestra relación con la empresa. \\
+  2 & Uso de HTTP & La URL comienza con \texttt{http://}; la comunicación no estaría cifrada. Además, aunque utilizara HTTPS, el candado no probaría que el propietario sea legítimo. \\
+  3 & Urgencia y miedo & La supuesta cuenta bloqueada busca que la víctima actúe antes de detenerse a verificar la situación. \\
+  4 & Remitente no verificado & ``Soporte Apple'' puede ser solamente el nombre de visualización. El escenario no muestra la dirección real, por lo que no puede confirmarse un dominio oficial. \\
+  5 & Recuperación mediante enlace & Se pide usar un enlace incluido en el propio correo en vez de acceder independientemente a la configuración oficial de la cuenta. \\
+\end{tabularx}
+
+\subsection*{Evaluación del enlace}
+
+En la URL analizada, el dominio registrable no pertenece a \texttt{apple.com}. Las palabras \texttt{apple} e \texttt{id} fueron incorporadas para generar familiaridad, pero no convierten al dominio en propiedad de Apple. La extensión \texttt{.info} tampoco es maliciosa por sí misma; el problema es la falta de correspondencia con el dominio oficial de la organización suplantada.
+
+\infobox{\textcolor{alerta}{\textbf{Conclusión del Caso A:}} la combinación de dominio no oficial, HTTP, presión emocional, identidad no comprobada y recuperación mediante un enlace recibido es coherente con un intento de phishing.}
+
+\reportpage
+\section*{Impacto probable del Caso A}
+
+Si la víctima siguiera el enlace, una página falsa podría solicitar su Apple ID, contraseña u otros datos de verificación. El atacante intentaría capturar esa información y utilizarla para acceder a la cuenta. Las consecuencias potenciales incluyen pérdida de control, exposición de datos sincronizados y abuso de servicios o medios de pago asociados.
+
+La existencia de varias señales simultáneas es más importante que cualquier indicador aislado. Por ejemplo, HTTP es claramente inseguro, pero un sitio fraudulento también podría utilizar HTTPS. Del mismo modo, un diseño profesional o el logo de Apple no demostrarían legitimidad porque esos elementos visuales pueden copiarse.
+
+\subsection*{Comprobación segura}
+
+La respuesta adecuada no consiste en comprobar el enlace sospechoso. El usuario debe cerrar el mensaje y realizar estas verificaciones de forma independiente:
+
+\begin{enumerate}
+  \item abrir manualmente la configuración del dispositivo o escribir la dirección oficial en el navegador;
+  \item revisar desde allí las notificaciones y el estado de la cuenta;
+  \item contactar al soporte utilizando datos obtenidos en el sitio o la aplicación oficial, nunca desde el correo recibido.
+\end{enumerate}
+
+\subsection*{Nombre visible y dirección real}
+
+El nombre ``Soporte Apple'' es un texto editable por quien envía el mensaje. Para evaluar la procedencia sería necesario inspeccionar la dirección completa situada detrás de ese nombre y, en un análisis profesional, revisar también los encabezados del correo. Como el caso no aporta esa dirección, la conclusión correcta no es inventarla, sino registrar que la identidad del remitente \textbf{no puede verificarse} con la información disponible.
+
+\infobox{\textcolor{azul}{\textbf{Regla práctica:}} el diseño, el logo y el nombre de visualización son elementos fáciles de copiar. La decisión debe basarse en el dominio real y en una verificación independiente.}
+
+\reportpage
+\section*{Caso B: smishing del paquete retenido}
+
+El segundo mensaje utiliza smishing: phishing distribuido mediante SMS. El pretexto combina una situación cotidiana -la recepción de un paquete- con una deuda aduanera pequeña y una instrucción directa de pago mediante un enlace acortado.
+
+\subsection*{Técnicas psicológicas utilizadas}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries\color{azul}}p{3.7cm} >{\raggedright\arraybackslash}X}
+  Técnica & Efecto buscado \\
+  \toprule
+  Urgencia & La palabra ``retenido'' sugiere que la víctima debe actuar rápidamente para no perder o demorar el paquete. \\
+  Miedo a la pérdida & La posibilidad de no recibir una compra crea una consecuencia concreta y cercana. \\
+  Contexto cotidiano & Muchas personas esperan entregas, por lo que el mensaje puede parecer plausible incluso si se envía masivamente. \\
+  Baja fricción & El pago de 1,20 euros parece demasiado pequeño para justificar una investigación y favorece una decisión automática. \\
+  Ocultamiento del destino & El enlace acortado impide reconocer el dominio real antes de abrirlo. \\
+\end{tabularx}
+
+\subsection*{¿Por qué 1,20 euros resulta efectivo?}
+
+La cantidad pequeña reduce la percepción de riesgo. Una víctima puede pensar que pagar cuesta menos tiempo que comprobar el reclamo y que la posible pérdida económica es mínima. Sin embargo, el pago puede ser solamente el pretexto: la página podría intentar obtener datos personales, información de una tarjeta o credenciales.
+
+El atacante no necesita conocer si la persona realmente espera un paquete. Al enviar el mensaje a muchas personas, aumenta la probabilidad de coincidir con alguien que sí realizó una compra reciente. Esa coincidencia hace que el pretexto parezca personalizado aunque no lo sea.
+
+\infobox{\textcolor{alerta}{\textbf{Conclusión del Caso B:}} la eficacia no depende del importe, sino de combinar urgencia, plausibilidad y una acción de bajo costo aparente.}
+
+\reportpage
+\section*{Protocolo de respuesta para un familiar}
+
+La recomendación debe ser breve, recordable y aplicable sin herramientas técnicas. Se proponen tres pasos:
+
+\subsection*{1. Detenerse y no interactuar}
+
+No abrir el enlace, no responder, no descargar archivos y no ingresar información. Hacer una pausa corta reduce el efecto de la urgencia y evita que el atacante controle el canal de decisión.
+
+\subsection*{2. Verificar por un canal independiente}
+
+Abrir manualmente la aplicación o escribir la dirección oficial en el navegador. Si fuera necesario llamar, utilizar un número obtenido fuera del mensaje, por ejemplo desde el sitio oficial o el reverso de una tarjeta. No usar los enlaces ni teléfonos proporcionados por la comunicación sospechosa.
+
+\subsection*{3. Reportar y protegerse}
+
+Marcar el mensaje como phishing o spam, bloquear al remitente y eliminarlo. Si ya se ingresaron datos, cambiar inmediatamente la contraseña desde el sitio oficial, cerrar las sesiones abiertas y activar MFA. Si se proporcionó información de pago, contactar al banco para bloquear o vigilar el medio afectado.
+
+\vspace{6pt}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.5cm} >{\raggedright\arraybackslash}X}
+  \toprule
+  \textcolor{seguro}{\textbf{Hacer}} & \textcolor{alerta}{\textbf{No hacer}} \\
+  \midrule
+  \textcolor{seguro}{\textbf{Acceder por la aplicación o dirección oficial.}} & Abrir el enlace recibido para ``comprobar'' si funciona. \\
+  \textcolor{seguro}{\textbf{Consultar por un teléfono obtenido independientemente.}} & Llamar al número incluido en el mensaje sospechoso. \\
+  \textcolor{seguro}{\textbf{Reportar, bloquear y conservar la calma.}} & Responder, discutir con el remitente o reenviar el enlace. \\
+\end{tabularx}
+
+\section*{Conclusión}
+
+Los dos casos explotan emociones antes que vulnerabilidades técnicas. En el correo, la revisión del dominio, el protocolo y la identidad del remitente permite detectar la suplantación. En el SMS, la urgencia, la expectativa de recibir un paquete y el pago pequeño disminuyen la resistencia de la víctima.
+
+La defensa más efectiva es interrumpir el recorrido propuesto por el atacante. No se debe utilizar el enlace recibido para verificar el propio mensaje. La comprobación debe comenzar de nuevo mediante una aplicación, un sitio o un teléfono oficial obtenido por separado.
+
+\end{document}
