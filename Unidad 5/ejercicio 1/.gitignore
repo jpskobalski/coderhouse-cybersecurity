@@ -1,0 +1,5 @@
+# Archivos privados del laboratorio: no forman parte de la entrega.
+*.hc
+*.kdbx
+*.key
+*.keyx
