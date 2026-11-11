@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.25cm,headheight=22pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern,microtype,graphicx,xcolor,fancyhdr,titlesec,tabularx,booktabs,hyperref}
+\definecolor{azul}{HTML}{18324B}
+\definecolor{turquesa}{HTML}{087E83}
+\definecolor{gris}{HTML}{52616B}
+\definecolor{fondo}{HTML}{EEF4F6}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\color{gris}Ciberseguridad | Unidad 5 | Preentrega 5}
+\fancyhead[R]{\small\color{gris}Juan Skobalski}
+\fancyfoot[C]{\small\thepage}
+\titleformat{\section}{\Large\bfseries\color{azul}}{}{0pt}{}
+\titleformat{\subsection}{\large\bfseries\color{turquesa}}{}{0pt}{}
+\setlength{\parindent}{0pt}\setlength{\parskip}{7pt}
+\hypersetup{pdftitle={Mi bóveda y contenedor seguro},pdfauthor={Juan Skobalski},colorlinks=true,urlcolor=turquesa}
+\newcommand{\evidencia}[4]{\begin{center}\includegraphics[width=#2\textwidth,height=#3cm,keepaspectratio]{capturas/#1}\par\small\color{gris}#4\end{center}}
+\begin{document}
+\thispagestyle{empty}
+\vspace*{1cm}{\large\color{turquesa}C O D E R H O U S E}\par
+\rule{\textwidth}{0.5pt}\vspace{2cm}
+{\Large\color{gris}CIBERSEGURIDAD}\par
+{\Huge\bfseries\color{azul}Mi bóveda y\\contenedor seguro}\par
+\vspace{0.6cm}{\LARGE\color{turquesa}Gestión de identidad y cifrado de datos}\par
+\vspace{1cm}Unidad 5 | Preentrega 5
+\vfill
+\colorbox{fondo}{\parbox{\dimexpr\textwidth-2\fboxsep}{
+\begin{tabularx}{\linewidth}{lX}
+\textbf{Estudiante} & Juan Skobalski\\
+\textbf{Curso} & Ciberseguridad\\
+\textbf{Herramientas} & Bitwarden y VeraCrypt en Windows\\
+\textbf{Fecha} & 11 de noviembre de 2026
+\end{tabularx}}}
+\vspace{1cm}
+Configuración, evidencias de uso y respaldo de cabecera.
+\clearpage
+\section{Introducción y alcance}
+La práctica integra dos controles: una bóveda para administrar credenciales y un contenedor cifrado para proteger archivos en reposo. El objetivo es documentar la configuración de Bitwarden y la creación, utilización, desmontaje y respaldo de cabecera de un volumen VeraCrypt.
+
+El alcance se limita al laboratorio y a las capturas aportadas. No incluye pruebas de recuperación destructivas, auditoría de contraseñas reales ni verificación del contenido privado de la bóveda.
+\subsection{Requisitos y criterios de verificación}
+\begin{tabularx}{\textwidth}{p{4.6cm}X}
+\toprule
+\textbf{Requisito} & \textbf{Evidencia y criterio}\\\midrule
+Tres registros & Listado de Bitwarden con tres entradas (figura 1).\\
+Contraseñas de más de 16 caracteres & Generador configurado en 20, con letras, números y símbolos (figura 2).\\
+AES y 100 MB & Asistente de creación (figuras 3 y 4).\\
+Sistema de archivos exFAT & Formateo finalizado y mensaje de creación exitosa (figura 5).\\
+Montaje y escritura & Unidad Y: montada y dos archivos de texto dentro de ella (figuras 6 y 7).\\
+Desmontaje & Y: sin volumen asociado en VeraCrypt (figura 8).\\
+Respaldo de cabecera & Confirmación explícita de respaldo exitoso (figura 9).\\\bottomrule
+\end{tabularx}
+\subsection{Decisiones de implementación}
+Se eligió Bitwarden para la bóveda y un volumen estándar de VeraCrypt. La consigna menciona tanto \texttt{secreto.txt} como \texttt{evidencia.txt}; se incluyeron ambos archivos para cubrir las dos formulaciones.
+
+La política solicitada para la contraseña maestra es una frase de al menos cuatro palabras aleatorias, con un mínimo de 12 caracteres y mezcla de tipos. Su cumplimiento no se puede inferir de las capturas y no se publica el secreto. La evidencia del generador tampoco demuestra por sí sola que sus valores se hayan guardado en cada una de las tres entradas.
+\clearpage
+\section{1. Bóveda de identidad}
+El listado de Bitwarden presenta tres registros: Facebook, Instagram y Santander. La contraseña del elemento seleccionado permanece enmascarada. Los nombres identifican entradas de la bóveda; no acreditan cambios de contraseña en los servicios externos.
+\evidencia{01_boveda.png}{1}{6.2}{Figura 1. Bóveda con tres registros y contraseña oculta.}
+\subsection{Generación de credenciales}
+La configuración utiliza 20 caracteres e incluye mayúsculas, minúsculas, números y símbolos, con al menos un número y un carácter especial. Esto supera el mínimo de longitud pedido. Se documentan las opciones sin mostrar el valor generado.
+\evidencia{02_generador.png}{0.72}{8}{Figura 2. Configuración del generador, sin exposición de la contraseña.}
+La finalidad es utilizar una credencial aleatoria distinta por registro, reduciendo el riesgo de reutilización. La frase maestra y los mecanismos de recuperación deben conservarse de forma privada.
+\clearpage
+\section{2. Configuración criptográfica}
+Se seleccionó AES como algoritmo de cifrado. El asistente muestra SHA512-PBKDF2 como función de derivación de claves: este parámetro interviene en la derivación a partir de la contraseña y no constituye otro algoritmo de cifrado del contenido.
+\evidencia{03_aes.png}{0.77}{8}{Figura 3. AES y SHA512-PBKDF2 seleccionados.}
+Se configuró el tamaño en 100 MB dentro del asistente. Esta captura conserva el valor introducido; la ventana de montaje posterior muestra 99 MiB. Se mantienen ambas lecturas tal como aparecen, sin asumir que las unidades ni los valores mostrados sean idénticos.
+\evidencia{04_tamano.png}{0.77}{8}{Figura 4. Tamaño solicitado: 100 MB.}
+\clearpage
+\section{3. Creación y montaje del contenedor}
+La confirmación de creación exitosa aparece junto al formato exFAT y al progreso del 100\%. Esta evidencia acredita la finalización del asistente, además de la selección previa de parámetros.
+\evidencia{05_creacion_exfat.png}{0.72}{8}{Figura 5. Creación completada con exFAT.}
+El volumen se montó en Y:. La ventana principal indica AES y tipo Normal, coherente con un volumen estándar. Montar habilita el acceso al sistema de archivos durante la sesión autorizada.
+\evidencia{06_montado.png}{0.72}{8}{Figura 6. Volumen montado en Y:, con AES y tipo Normal.}
+\clearpage
+\section{4. Escritura y desmontaje}
+El Explorador muestra \texttt{secreto.txt} y \texttt{evidencia.txt} dentro de Y:. La captura acredita su presencia en la unidad, pero no permite leer su contenido ni verificar una reapertura posterior.
+\evidencia{07_archivos.png}{1}{5.5}{Figura 7. Archivos de texto guardados dentro de Y:.}
+Luego del desmontaje, la fila Y: ya no muestra un volumen asociado y la acción disponible es Mount. El archivo contenedor permanece en su ubicación original; desmontarlo no elimina los datos almacenados.
+\evidencia{08_desmontado.png}{0.75}{9}{Figura 8. Estado de VeraCrypt tras desmontar el volumen.}
+\subsection{Alcance de la protección}
+El cifrado protege los datos en reposo. Con el volumen montado, las aplicaciones con permisos sobre la sesión pueden acceder a sus archivos. Además, un editor puede dejar temporales fuera del contenedor. Por eso se utilizan datos de práctica y se desmonta al finalizar.
+\clearpage
+\section{5. Respaldo de cabecera}
+La aplicación confirma que se creó exitosamente una copia de seguridad de la cabecera del volumen. Esta es la evidencia del resultado de Backup Volume Header, no solo de la selección de la opción.
+\evidencia{09_header.png}{0.9}{9}{Figura 9. Confirmación de creación del respaldo de cabecera.}
+La cabecera contiene información necesaria para acceder al volumen. Su respaldo ayuda ante daños de esa estructura, pero no sustituye una copia del contenedor ni permite recuperar una contraseña olvidada. El aviso también indica que restaurarlo recupera la contraseña vigente al momento del respaldo y que corresponde únicamente a ese volumen.
+
+La ubicación del respaldo no aparece en la captura. Debe conservarse fuera del contenedor, preferentemente en otro medio. No se realizó ni se documentó una restauración de prueba.
+\subsection{Resultados y conclusión}
+Las evidencias muestran una bóveda con tres registros, la configuración del generador de 20 caracteres, un contenedor configurado con AES y 100 MB, su creación en exFAT, el montaje en Y:, dos archivos guardados, el desmontaje y el respaldo de cabecera exitoso.
+
+La evidencia complementaria de la figura 10 muestra ambos archivos nuevamente accesibles en el listado de Y: después del desmontaje documentado. Quedan fuera de la verificación visual la robustez de la frase maestra, la asignación de una contraseña distinta a cada registro, el lugar de almacenamiento del respaldo y la integridad del contenido de los archivos. Estos aspectos requieren comprobación local; no se presentan como resultados acreditados.
+
+El laboratorio evidencia cómo combinar gestión de credenciales, cifrado en reposo y respaldo de metadatos. La efectividad del conjunto depende también de custodiar las claves, conservar copias de los datos y desmontar el volumen después de utilizarlo.
+\small Referencia: documentación oficial de VeraCrypt, sección Program Menu.
+\clearpage
+\normalsize
+\section{6. Comprobación posterior al montaje}
+La captura adicional fue aportada como seguimiento de la comprobación de reapertura. El Explorador vuelve a mostrar la unidad Y: y los archivos \texttt{evidencia.txt} y \texttt{secreto.txt}, ambos con tamaño mostrado de 1 KB y fecha de modificación del 11 de noviembre de 2026 a las 08:54.
+\evidencia{10_reapertura.png}{1}{8}{Figura 10. Presencia de los dos archivos en Y: tras volver a montar el volumen.}
+\subsection{Resultado observado}
+En conjunto con el estado desmontado de la figura 8, esta evidencia documenta la secuencia de desmontaje y posterior acceso a la unidad. Los archivos continúan presentes y sus nombres coinciden con los requeridos por la consigna.
+
+La captura muestra el listado, no los archivos abiertos. Por lo tanto, acredita su presencia, pero no una comparación de contenido ni una verificación de integridad mediante hashes. Tampoco constituye una prueba de restauración del respaldo de cabecera.
+\end{document}
